@@ -1,6 +1,8 @@
 package com.codecool.dungeoncrawl.logic.map;
 
 import com.codecool.dungeoncrawl.gui.Main;
+import com.codecool.dungeoncrawl.logic.Objects.Door;
+import com.codecool.dungeoncrawl.logic.Objects.Stairs;
 import com.codecool.dungeoncrawl.logic.actors.*;
 import com.codecool.dungeoncrawl.logic.items.HealthPotion;
 import com.codecool.dungeoncrawl.logic.items.Key;
@@ -37,9 +39,11 @@ public class MapLoader {
                             break;
                         case 'h':
                             cell.setType(CellType.STAIRSDOWN);
+                            cell.setEntrance(new Stairs());
                             break;
                         case 'H':
                             cell.setType(CellType.STAIRSUP);
+                            cell.setEntrance(new Stairs());
                             break;
                         case 'w':
                             cell.setType(CellType.WIN);
@@ -74,6 +78,7 @@ public class MapLoader {
                             break;
                         case 'l':
                             cell.setType(CellType.CLOSE);
+                            cell.setEntrance(new Door());
                             break;
                         case 'g':
                             cell.setType(CellType.FLOOR);

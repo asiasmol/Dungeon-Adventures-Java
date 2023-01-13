@@ -27,12 +27,11 @@ public class Player extends Actor {
         GameMap map = cell.getGameMap();
         if (!cell.hasNeighbor(dx, dy)) return;
         Cell neighbor = cell.getNeighbor(dx, dy);
-        //check we have key if yes open door
-        Door.tryOpen(dx, dy, map, items);
-        Stairs.goDown(dx, dy, cell);
+        neighbor.tryToEnter(this);
+
         WinObject.checkWin(dx, dy, cell);
         //check object is in collidlist
-        if (map.getObstacles().contains(neighbor.getType())&& !NAMES.contains(name)) {
+        if (map.getObstacles().contains(neighbor.getType()) && !NAMES.contains(name)) {
             return;
         }
         //check is enemies

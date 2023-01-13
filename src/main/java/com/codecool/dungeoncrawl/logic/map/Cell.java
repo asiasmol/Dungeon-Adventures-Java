@@ -1,13 +1,19 @@
 package com.codecool.dungeoncrawl.logic.map;
 
 import com.codecool.dungeoncrawl.logic.Drawable;
+import com.codecool.dungeoncrawl.logic.Objects.Door;
+import com.codecool.dungeoncrawl.logic.Objects.Entrance;
+import com.codecool.dungeoncrawl.logic.Objects.NoEntry;
+import com.codecool.dungeoncrawl.logic.Objects.Stairs;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.Item;
 
 public class Cell implements Drawable {
     private CellType type;
     private Actor actor;
     private Item item;
+    private Entrance entrance;
     private GameMap gameMap;
     private final int x, y;
 
@@ -16,8 +22,12 @@ public class Cell implements Drawable {
         this.x = x;
         this.y = y;
         this.type = type;
+        this.entrance = new NoEntry();
     }
 
+    public void setEntrance(Entrance entrance) {
+        this.entrance = entrance;
+    }
 
     public CellType getType() {
         return type;
@@ -71,5 +81,9 @@ public class Cell implements Drawable {
 
     public GameMap getGameMap() {
         return gameMap;
+    }
+
+    public void tryToEnter(Player player) {
+        entrance.tryToEnter(this, player.getInventory());
     }
 }
