@@ -2,7 +2,6 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Objects.WinObject;
 import com.codecool.dungeoncrawl.logic.map.Cell;
-import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +10,7 @@ import java.util.List;
 public class Player extends Actor {
     String name = "player";
     private static final List<String> NAMES = List.of("piotr", "adrian", "galyna", "karolina");
+    boolean canWalkThroughWalls;
 
     ArrayList<Item> items = new ArrayList<>();
 
@@ -22,28 +22,19 @@ public class Player extends Actor {
 
 
     public void move(int dx, int dy) {
-        GameMap map = cell.getGameMap();
-        if (!cell.hasNeighbor(dx, dy)) return;
-        Cell neighbor = cell.getCellShiftedBy(dx, dy);
-        neighbor.tryToEnter(this);
+        if (cell.hasNeighbor(dx, dy)) {
+            Cell nextCell = cell.getNeighbor(dx, dy);
+            nextCell.tryToEnter(this);
+            WinObject.checkWin(dx, dy, cell);
 
-        WinObject.checkWin(dx, dy, cell);
-        //check object is in collidlist
-        if (map.getObstacles().contains(neighbor.getType()) && !NAMES.contains(name)) {
-            return;
+            if (nextCell.canPlayerMoveOn(canWalkThroughWalls)) {
+                changeCell(dx, dy);
+            } else if (nextCell.containsEnemyThatCanBeAttacked()) {
+                fight(nextCell.getActor());
+            }
         }
-        //check is enemies
-        if (neighbor.getActor() != null) {
-            Actor enemy = neighbor.getActor();
-            fight(enemy);
-        } else changeCell(dx, dy);
-        // players move triggers mobs move
-        map.getMobs().forEach(Actor::move);
-
+        cell.getGameMap().getMobs().forEach(Actor::move);
     }
-
-
-
 
     public ArrayList<Item> getInventory() {
         return items;
@@ -65,14 +56,24 @@ public class Player extends Actor {
 
     public void setName(String name) {
         this.name = name;
+        if (NAMES.contains(name.toLowerCase())) {
+            canWalkThroughWalls = true;
+        }
     }
+
     public String getName() {
         return name;
     }
-    public void setAttributes(ArrayList<Item> items,int health,int damage,String name){
+
+    public boolean CanWalkThroughWalls() {
+        return canWalkThroughWalls;
+    }
+
+    public void setAttributes(ArrayList<Item> items, int health, int damage, String name, boolean canWalkThroughWalls){
         this.health = health;
         this.damage = damage;
         this.items = items;
         this.name = name;
+        this.canWalkThroughWalls = canWalkThroughWalls;
     }
 }

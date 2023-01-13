@@ -38,6 +38,7 @@ public class Cell implements Drawable {
     public void setActor(Actor actor) {
         this.actor = actor;
     }
+
     public Item getItem() {
         return item;
     }
@@ -45,6 +46,7 @@ public class Cell implements Drawable {
     public boolean isItemOnCell() {
         return getItem() != null;
     }
+
     public void setItem(Item item) {
         this.item = item;
     }
@@ -53,7 +55,7 @@ public class Cell implements Drawable {
         return actor;
     }
 
-    public Cell getCellShiftedBy(int dx, int dy) {
+    public Cell getNeighbor(int dx, int dy) {
         return gameMap.getCell(x + dx, y + dy);
     }
 
@@ -83,5 +85,13 @@ public class Cell implements Drawable {
 
     public void tryToEnter(Player player) {
         entrance.tryToEnter(this, player.getInventory());
+    }
+
+    public boolean canPlayerMoveOn(boolean canWalkThroughWalls) {
+        return (canWalkThroughWalls || !gameMap.getObstacles().contains(type)) && actor == null;
+    }
+
+    public boolean containsEnemyThatCanBeAttacked() {
+        return actor != null && !gameMap.getObstacles().contains(type);
     }
 }

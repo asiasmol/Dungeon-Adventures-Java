@@ -1,6 +1,5 @@
 package com.codecool.dungeoncrawl.gui;
 
-import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
@@ -280,8 +279,6 @@ public class Main extends Application {
         }
     }
 
-
-
     private void refresh() {
         showAndHidePickUpButton();
         map.removeDeadMobs();
@@ -289,7 +286,6 @@ public class Main extends Application {
         pickUpButton.setFocusTraversable(false);
         reLoadCanvas();
         drawLoot();
-
     }
 
     private void reLoadCanvas() {
@@ -362,21 +358,22 @@ public class Main extends Application {
     public void addMap(GameMap map) {
         maps.add(map);
     }
+
     public void nextLevel(){
-        this.level ++;
-        if(level >=maps.size()){
-            GameMap newmap = mapFromFileLoader.loadMap(this, nameMaps.get(level));
-            addMap(newmap);
+        this.level++;
+        if (level >= maps.size()){
+            GameMap newMap = mapFromFileLoader.loadMap(this, nameMaps.get(level));
+            addMap(newMap);
         }
-        this.map =maps.get(level);
-        Player player = maps.get(level-1).getPlayer();
-        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName());
+        this.map = maps.get(level);
+        Player player = maps.get(level - 1).getPlayer();
+        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName(), player.CanWalkThroughWalls());
     }
 
     public void previousLevel(){
-        this.level --;
-        this.map =maps.get(level);
-        Player player = maps.get(level+1).getPlayer();
-        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName());
+        this.level--;
+        this.map = maps.get(level);
+        Player player = maps.get(level + 1).getPlayer();
+        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName(), player.CanWalkThroughWalls());
     }
 }
