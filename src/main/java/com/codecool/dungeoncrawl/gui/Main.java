@@ -283,7 +283,6 @@ public class Main extends Application {
 
 
     private void refresh() {
-        map.getMobs().forEach(Actor::move);
         showAndHidePickUpButton();
         map.removeDeadMobs();
         checkPlayerIsDead();

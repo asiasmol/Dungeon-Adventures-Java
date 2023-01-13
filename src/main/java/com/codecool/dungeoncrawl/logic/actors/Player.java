@@ -11,8 +11,8 @@ import java.util.List;
 
 
 public class Player extends Actor {
-    String name="player";
-    private  static final List<String> NAMES = List.of("piotr", "adrian", "galyna", "karolina");
+    String name = "player";
+    private static final List<String> NAMES = List.of("piotr", "adrian", "galyna", "karolina");
 
     ArrayList<Item> items = new ArrayList<>();
 
@@ -39,8 +39,10 @@ public class Player extends Actor {
         if (neighbor.getActor() != null) {
             Actor enemy = neighbor.getActor();
             fight(enemy);
-        }else
-            changeCell(dx, dy);//move
+        } else changeCell(dx, dy);
+        // players move triggers mobs move
+        map.getMobs().forEach(Actor::move);
+
     }
 
 
