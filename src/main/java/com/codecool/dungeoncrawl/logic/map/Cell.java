@@ -1,10 +1,8 @@
 package com.codecool.dungeoncrawl.logic.map;
 
 import com.codecool.dungeoncrawl.logic.Drawable;
-import com.codecool.dungeoncrawl.logic.Objects.Door;
 import com.codecool.dungeoncrawl.logic.Objects.Entrance;
 import com.codecool.dungeoncrawl.logic.Objects.NoEntry;
-import com.codecool.dungeoncrawl.logic.Objects.Stairs;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.Item;
@@ -55,7 +53,7 @@ public class Cell implements Drawable {
         return actor;
     }
 
-    public Cell getNeighbor(int dx, int dy) {
+    public Cell getCellShiftedBy(int dx, int dy) {
         return gameMap.getCell(x + dx, y + dy);
     }
 

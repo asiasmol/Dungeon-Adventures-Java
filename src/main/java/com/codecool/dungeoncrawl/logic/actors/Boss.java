@@ -1,6 +1,5 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
-import com.codecool.dungeoncrawl.logic.Objects.Stairs;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.CellType;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
@@ -28,13 +27,13 @@ public class Boss extends Actor{
 
         List<int[]> steps = getTrackingSteps();
         List<int[]> filteredSteps = steps.stream().filter(d -> cell.hasNeighbor(d[0], d[1]))
-                .filter(d -> GROUND.contains(cell.getNeighbor(d[0], d[1]).getType()))
-                .filter(d -> playerCell.equals(cell.getNeighbor(d[0], d[1])) || cell.getNeighbor(d[0], d[1]).getActor() == null)
+                .filter(d -> GROUND.contains(cell.getCellShiftedBy(d[0], d[1]).getType()))
+                .filter(d -> playerCell.equals(cell.getCellShiftedBy(d[0], d[1])) || cell.getCellShiftedBy(d[0], d[1]).getActor() == null)
                 .collect(Collectors.toList());
 
         if(filteredSteps.size() > 0){
             int[] step = filteredSteps.get(random.nextInt(filteredSteps.size()));
-            Cell next = cell.getNeighbor(step[0], step[1]);
+            Cell next = cell.getCellShiftedBy(step[0], step[1]);
             if (next.getActor() == null)  changeCell(step[0], step[1]);
             else {
                 fight(player);

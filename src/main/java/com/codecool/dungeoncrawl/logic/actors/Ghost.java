@@ -22,7 +22,7 @@ public class Ghost extends Actor {
             int[][] coordsDifferentials = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
             int[] diff = coordsDifferentials[random.nextInt(coordsDifferentials.length)];
             if (cell.hasNeighbor(diff[0], diff[1])
-                    && cell.getNeighbor(diff[0], diff[1]).getActor() == null){
+                    && cell.getCellShiftedBy(diff[0], diff[1]).getActor() == null){
                     //&& !(cell.getNeighbor(diff[0], diff[1]).getActor()  instanceof Player)) {
                 changeCell(diff[0], diff[1]);
                 break;

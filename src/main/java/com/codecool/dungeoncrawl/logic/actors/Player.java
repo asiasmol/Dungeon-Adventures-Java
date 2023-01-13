@@ -1,8 +1,6 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Objects.WinObject;
-import com.codecool.dungeoncrawl.logic.Objects.Door;
-import com.codecool.dungeoncrawl.logic.Objects.Stairs;
 import com.codecool.dungeoncrawl.logic.map.Cell;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.items.Item;
@@ -26,7 +24,7 @@ public class Player extends Actor {
     public void move(int dx, int dy) {
         GameMap map = cell.getGameMap();
         if (!cell.hasNeighbor(dx, dy)) return;
-        Cell neighbor = cell.getNeighbor(dx, dy);
+        Cell neighbor = cell.getCellShiftedBy(dx, dy);
         neighbor.tryToEnter(this);
 
         WinObject.checkWin(dx, dy, cell);
