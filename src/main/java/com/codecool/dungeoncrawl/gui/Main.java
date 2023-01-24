@@ -234,11 +234,6 @@ public class Main extends Application {
         lootLayout();
         ui.add(mainLootGrid, 0, 14, 3, 1);
 
-        pickUpButton.setOnAction(actionEvent ->  {
-            map.getPlayer().pickUpItem();
-            refresh();
-        });
-
 
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(canvas);
@@ -269,6 +264,9 @@ public class Main extends Application {
             case S -> {
                 Player player = map.getPlayer();
                 dbManager.savePlayer(player);
+            }
+            case P -> {
+                map.getPlayer().pickUpItem();
             }
         }
         refresh();
@@ -368,20 +366,20 @@ public class Main extends Application {
     }
 
     public void nextLevel(){
+        Player player = maps.get(level).getPlayer();
         this.level++;
         if (level >= maps.size()){
             GameMap newMap = mapFromFileLoader.loadMap(this, nameMaps.get(level));
             addMap(newMap);
         }
         this.map = maps.get(level);
-        Player player = maps.get(level - 1).getPlayer();
         map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName(), player.CanWalkThroughWalls());
     }
 
     public void previousLevel(){
+        Player player = maps.get(level).getPlayer();
         this.level--;
         this.map = maps.get(level);
-        Player player = maps.get(level + 1).getPlayer();
         map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName(), player.CanWalkThroughWalls());
     }
 

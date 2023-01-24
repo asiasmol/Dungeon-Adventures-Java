@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.logic.map;
 import com.codecool.dungeoncrawl.gui.Main;
 import com.codecool.dungeoncrawl.logic.Objects.Door;
 import com.codecool.dungeoncrawl.logic.Objects.Stairs;
+import com.codecool.dungeoncrawl.logic.Objects.WinObject;
 import com.codecool.dungeoncrawl.logic.actors.*;
 import com.codecool.dungeoncrawl.logic.items.HealthPotion;
 import com.codecool.dungeoncrawl.logic.items.Key;
@@ -47,6 +48,7 @@ public class MapLoader {
                             break;
                         case 'w':
                             cell.setType(CellType.WIN);
+                            cell.setEntrance(new WinObject());
                             break;
                         case 'c':
                             cell.setType(CellType.FAKEWIN);
