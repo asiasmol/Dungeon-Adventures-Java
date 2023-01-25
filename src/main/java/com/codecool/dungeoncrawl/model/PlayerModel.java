@@ -3,6 +3,12 @@ package com.codecool.dungeoncrawl.model;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 
 public class PlayerModel extends BaseModel {
+    private int id;
+    private String name;
+    private int health;
+    private int damage;
+    //private List<Item>
+
     private String playerName;
     private int hp;
     private int x;
