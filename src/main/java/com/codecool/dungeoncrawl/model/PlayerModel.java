@@ -23,6 +23,10 @@ public class PlayerModel extends BaseModel {
 
     }
 
+    public PlayerModel(String string, int anInt, int anInt1, int anInt2) {
+        super();
+    }
+
     public String getPlayerName() {
         return playerName;
     }
