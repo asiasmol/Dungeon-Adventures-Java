@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS player;
 DROP TABLE IF EXISTS game;
 DROP TABLE IF EXISTS map;
-DROP TABLE IF EXISTS mob;
+DROP TABLE IF EXISTS actor;
 DROP TABLE IF EXISTS cell;
 
 CREATE TABLE game (
@@ -25,7 +25,7 @@ CREATE TABLE cell (
                       type VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE mob (
+CREATE TABLE actor (
                      id serial PRIMARY KEY,
                      cell_id INTEGER REFERENCES cell(id),
                      health integer
