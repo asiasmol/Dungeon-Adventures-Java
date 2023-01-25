@@ -19,9 +19,9 @@ public class MapDaoJdbc implements MapDao{
     @Override
     public void add(MapModel map) {
         try(Connection conn = dataSource.getConnection()){
-            String sql = "INSERT INTO map (game_id, level, width, height) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO map (player_id, level, width, height) VALUES (?, ?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1,map.getGame_id());
+            statement.setInt(1,map.getPlayer_id());
             statement.setInt(2,map.getLevel());
             statement.setInt(3,map.getWidth());
             statement.setInt(4,map.getHeight());
@@ -38,9 +38,9 @@ public class MapDaoJdbc implements MapDao{
     @Override
     public void update(MapModel map) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "UPDATE map SET game_id = ?, level = ?, width = ?, height = ? WHERE id = ?";
+            String sql = "UPDATE map SET player_id = ?, level = ?, width = ?, height = ? WHERE id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, map.getGame_id());
+            statement.setInt(1, map.getPlayer_id());
             statement.setInt(2, map.getLevel());
             statement.setInt(3, map.getWidth());
             statement.setInt(4, map.getHeight());
@@ -54,7 +54,7 @@ public class MapDaoJdbc implements MapDao{
     @Override
     public MapModel get(int id) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT game_id,level,width,height FROM map WHERE id = ?";
+            String sql = "SELECT player_id,level,width,height FROM map WHERE id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -68,15 +68,15 @@ public class MapDaoJdbc implements MapDao{
     }
 
     @Override
-    public List<MapModel> getAll(int game_id) {
+    public List<MapModel> getAll(int player_id) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT * FROM map WHERE game_id = ?";
+            String sql = "SELECT * FROM map WHERE player_id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, game_id);
+            statement.setInt(1, player_id);
             ResultSet resultSet = statement.executeQuery();
             List<MapModel> maps = new ArrayList<>();
             while (resultSet.next()){
-                MapModel map = new MapModel(game_id, resultSet.getInt(3), resultSet.getInt(4), resultSet.getInt(5));
+                MapModel map = new MapModel(player_id, resultSet.getInt(3), resultSet.getInt(4), resultSet.getInt(5));
                 map.setId(resultSet.getInt(1));
                 maps.add(map);
             }
