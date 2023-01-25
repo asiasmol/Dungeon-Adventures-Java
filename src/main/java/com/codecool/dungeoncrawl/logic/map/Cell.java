@@ -1,13 +1,15 @@
 package com.codecool.dungeoncrawl.logic.map;
 
 import com.codecool.dungeoncrawl.logic.Drawable;
+import com.codecool.dungeoncrawl.logic.Objects.Door;
 import com.codecool.dungeoncrawl.logic.Objects.Entrance;
 import com.codecool.dungeoncrawl.logic.Objects.NoEntry;
-import com.codecool.dungeoncrawl.logic.actors.Actor;
-import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.logic.items.Item;
+import com.codecool.dungeoncrawl.logic.Objects.Stairs;
+import com.codecool.dungeoncrawl.logic.actors.*;
+import com.codecool.dungeoncrawl.logic.items.*;
 
 public class Cell implements Drawable {
+
     private CellType type;
     private Actor actor;
     private Item item;
@@ -94,5 +96,34 @@ public class Cell implements Drawable {
 
     public boolean containsEnemyThatCanBeAttacked() {
         return actor != null && !gameMap.getObstacles().contains(type);
+    }
+
+    public String getChar() {
+        if (actor != null) {
+            if (actor instanceof Player) return "@";
+            if (actor instanceof Backbone) return "b";
+            if (actor instanceof Ghost) return "g";
+            if (actor instanceof Defender) return "d";
+            if (actor instanceof Boss) return "B";
+        }
+        if (item != null) {
+            if (item instanceof Key) return "k";
+            if (item instanceof Shield) return "s";
+            if (item instanceof Axe) return "a";
+            if (item instanceof HealthPotion) return "p"; // "p" nie było do tej pory
+        }
+        if (entrance instanceof Stairs) {
+            if (type == CellType.STAIRSUP) return "H";
+            if (type == CellType.STAIRSDOWN) return "h";
+        }
+        if (entrance instanceof Door) {
+            if (type == CellType.OPEN) return "o";
+            if (type == CellType.CLOSE) return "l";
+        }
+        if (type == CellType.WALL) return "#";
+        if (type == CellType.FLOOR) return ".";
+        if (type == CellType.FAKEWIN) return "c";
+        if (type == CellType.WIN) return "w";
+        return " ";
     }
 }
