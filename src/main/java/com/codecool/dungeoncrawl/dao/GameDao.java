@@ -1,6 +1,5 @@
 package com.codecool.dungeoncrawl.dao;
 
-import com.codecool.dungeoncrawl.model.CellModel;
 import com.codecool.dungeoncrawl.model.GameModel;
 
 import java.util.List;
