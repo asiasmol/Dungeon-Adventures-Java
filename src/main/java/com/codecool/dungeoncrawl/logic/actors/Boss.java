@@ -37,7 +37,7 @@ public class Boss extends Actor{
             if (next.getActor() == null)  changeCell(step[0], step[1]);
             else {
                 fight(player);
-                if (health <0) cell.getGameMap().next();
+                if (health <0) cell.getGameMap().getMain().nextLevel();
             }
         }
     }

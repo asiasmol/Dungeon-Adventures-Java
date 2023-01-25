@@ -31,11 +31,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Main extends Application {
-    public MapLoader mapFromFileLoader = new MapLoader();
+    MapLoader mapFromFileLoader = new MapLoader();
     GameDatabaseManager dbManager;
 
+    List<GameMap> maps = new ArrayList<>();
     int level;
-    GameMap map = mapFromFileLoader.loadMap(0);
+    GameMap map;
 
     int FONT_SIZE = 16;
     String FONT_COLOR = "white";
@@ -60,6 +61,11 @@ public class Main extends Application {
     private GridPane mainLootGrid = new GridPane();
     Stage stage;
 
+
+    public Main() {
+        maps.add(mapFromFileLoader.loadMap(this,level));
+        this.map =maps.get(level);
+    }
     public static void main(String[] args) {
         launch(args);
     }
@@ -167,7 +173,10 @@ public class Main extends Application {
         restartGameButton.setId("allbtn");
         restartGameButton.addEventFilter(MouseEvent.MOUSE_CLICKED, (e) -> {
             try {
-                map = mapFromFileLoader.loadMap(0);
+                maps = new ArrayList<>();
+                level = 0;
+                maps.add(mapFromFileLoader.loadMap(this,level));
+                map = maps.get(level);
                 mainMenu(primaryStage);
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
@@ -265,8 +274,8 @@ public class Main extends Application {
         if (map.getPlayer().getCell().isItemOnCell()) {
             showPickButton();
             pickUpButton.setOnAction(actionEvent ->  {
-                map.getPlayer().pickUpItem();
-                refresh();
+                        map.getPlayer().pickUpItem();
+                        refresh();
                     }
             );
         } else {
@@ -316,11 +325,11 @@ public class Main extends Application {
     }
 
     public void win() {
-       try {
-                stage = EndGame(stage,"/win.png");
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            stage = EndGame(stage,"/win.png");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void drawLoot() {
@@ -350,25 +359,27 @@ public class Main extends Application {
         pickUpButton.setVisible(false);
     }
 
+    public void addMap(GameMap map) {
+        maps.add(map);
+    }
 
+    public void nextLevel(){
+        Player player = maps.get(level).getPlayer();
+        this.level++;
+        if (level >= maps.size()){
+            GameMap newMap = mapFromFileLoader.loadMap(this, level);
+            addMap(newMap);
+        }
+        this.map = maps.get(level);
+        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName(), player.CanWalkThroughWalls());
+    }
 
-//    public void nextLevel(){
-//        Player player = maps.get(level).getPlayer();
-//        this.level++;
-//        if (level >= maps.size()){
-//            GameMap newMap = mapFromFileLoader.loadMap(this, nameMaps.get(level));
-//            addMap(newMap);
-//        }
-//        this.map = maps.get(level);
-//        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName(), player.CanWalkThroughWalls());
-//    }
-
-//    public void previousLevel(){
-//        Player player = maps.get(level).getPlayer();
-//        this.level--;
-//        this.map = maps.get(level);
-//        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName(), player.CanWalkThroughWalls());
-//    }
+    public void previousLevel(){
+        Player player = maps.get(level).getPlayer();
+        this.level--;
+        this.map = maps.get(level);
+        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName(), player.CanWalkThroughWalls());
+    }
 
     private void setupDbManager() {
         dbManager = new GameDatabaseManager();

@@ -19,14 +19,14 @@ public class MapLoader {
 
     List<String> maps = Arrays.asList("/map.txt","/map2.txt","/map3.txt","/win.txt");
 
-    public GameMap loadMap(int level) {
+    public GameMap loadMap(Main main,int level) {
         InputStream is = MapLoader.class.getResourceAsStream(maps.get(level));
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
         scanner.nextLine(); // empty line
 
-        GameMap map = new GameMap(this,width, height, CellType.EMPTY);
+        GameMap map = new GameMap(main,width, height, CellType.EMPTY);
         for (int y = 0; y < height; y++) {
             String line = scanner.nextLine();
             for (int x = 0; x < width; x++) {

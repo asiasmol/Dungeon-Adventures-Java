@@ -84,7 +84,7 @@ public class Cell implements Drawable {
         return gameMap;
     }
 
-    public void tryToEnter(Player player) {
+    public void tryToEnter(Player player)  {
         entrance.tryToEnter(this, player.getInventory());
     }
 

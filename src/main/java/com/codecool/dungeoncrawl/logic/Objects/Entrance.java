@@ -7,6 +7,6 @@ import java.util.ArrayList;
 
 public interface Entrance {
 
-    void tryToEnter(Cell cell, ArrayList<Item> items);
+    void tryToEnter(Cell cell, ArrayList<Item> items) ;
 
 }

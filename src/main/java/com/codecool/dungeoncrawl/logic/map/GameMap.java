@@ -9,16 +9,16 @@ import java.util.*;
 public class GameMap {
     private int width;
     private int height;
-    private List<GameMap> maps = new ArrayList<>();
-    private int level = 0;
+//    private List<GameMap> maps = new ArrayList<>();
+//    private int level = 0;
     private Cell[][] cells;
     private final List<CellType> obstacles = Arrays.asList(CellType.WALL, CellType.CLOSE);
     private Player player;
-    MapLoader mapLoader;
+    Main main;
 
-    public GameMap(MapLoader mapLoader,int width, int height, CellType defaultCellType) {
-        maps.add(this);
-        this.mapLoader = mapLoader;
+    public GameMap(Main mapLoader,int width, int height, CellType defaultCellType) {
+//        maps.add((GameMap) this.clone());
+        this.main = mapLoader;
         this.width = width;
         this.height = height;
         cells = new Cell[width][height];
@@ -77,32 +77,36 @@ public class GameMap {
         return player.getX() == x && player.getY() == y;
     }
 
-    public void next() {
-        level++;
-        if (level >= maps.size()){
-            maps.add(mapLoader.loadMap(level));
-        }
-        width = maps.get(level).getWidth();
-        height = maps.get(level).getHeight();
-        cells = maps.get(level).getCells();
-
-
-        Player newPlayer = maps.get(level).getPlayer();
-        player.setCell(newPlayer.getCell());
-    }
+//    public void next() throws CloneNotSupportedException {
+//        level++;
+//        if (level >= maps.size()){
+//            maps.add(mapLoader.loadMap(level));
+//        }
+//        width = maps.get(level).getWidth();
+//        height = maps.get(level).getHeight();
+//        cells = maps.get(level).getCells();
+//
+//
+//        Player newPlayer = maps.get(level).getPlayer();
+//        player.setCell(newPlayer.getCell());
+//    }
 
     private Cell[][] getCells() {
         return cells;
     }
 
-    public void previous(){
-        level--;
-        width = maps.get(level).getWidth();
-        height = maps.get(level).getHeight();
-        cells = maps.get(level).getCells();
+//    public void previous(){
+//        level--;
+//        width = maps.get(level).getWidth();
+//        height = maps.get(level).getHeight();
+//        cells = maps.get(level).getCells();
+//
+//        Player newPlayer = maps.get(level).getPlayer();
+//        player.setCell(newPlayer.getCell());
+//    }
 
-        Player newPlayer = maps.get(level).getPlayer();
-        player.setCell(newPlayer.getCell());
+    public Main getMain() {
+        return main;
     }
 
     public boolean areCoordsOnMap(int i, int j) {
