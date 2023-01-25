@@ -12,11 +12,11 @@ import java.util.Objects;
 public class Stairs implements Entrance{
 
     @Override
-    public void tryToEnter(Cell cell, ArrayList<Item> items) {
+    public void tryToEnter(Cell cell, ArrayList<Item> items) throws CloneNotSupportedException {
         goDown(cell);
     }
 
-    public void goDown(Cell cell) {
+    public void goDown(Cell cell) throws CloneNotSupportedException {
         if (Objects.equals(cell.getType(), CellType.STAIRSDOWN )){
             cell.getGameMap().next();
         }

@@ -35,7 +35,7 @@ public class Main extends Application {
     GameDatabaseManager dbManager;
 
     int level;
-    GameMap map = mapFromFileLoader.loadMap(0);
+    GameMap map = mapFromFileLoader.loadMap(this,0);
 
     int FONT_SIZE = 16;
     String FONT_COLOR = "white";
@@ -59,6 +59,9 @@ public class Main extends Application {
     private Button endButton = new Button("Back to manu");
     private GridPane mainLootGrid = new GridPane();
     Stage stage;
+
+    public Main() throws CloneNotSupportedException {
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -167,10 +170,12 @@ public class Main extends Application {
         restartGameButton.setId("allbtn");
         restartGameButton.addEventFilter(MouseEvent.MOUSE_CLICKED, (e) -> {
             try {
-                map = mapFromFileLoader.loadMap(0);
+                map = mapFromFileLoader.loadMap(this,0);
                 mainMenu(primaryStage);
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
+            } catch (CloneNotSupportedException ex) {
+                throw new RuntimeException(ex);
             }
         });
         VBox buttons = new VBox(restartGameButton);
@@ -231,7 +236,13 @@ public class Main extends Application {
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
         refresh();
-        scene.setOnKeyPressed(this::onKeyPressed);
+        scene.setOnKeyPressed(keyEvent -> {
+            try {
+                onKeyPressed(keyEvent);
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
+            }
+        });
         primaryStage.setTitle("Dungeon Adventures");
         primaryStage.show();
     }
@@ -244,7 +255,7 @@ public class Main extends Application {
         mainLootGrid.setBackground(new Background(new BackgroundFill(Color.valueOf("#472D3C"), CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
-    private void onKeyPressed(KeyEvent keyEvent) {
+    private void onKeyPressed(KeyEvent keyEvent) throws CloneNotSupportedException {
         switch (keyEvent.getCode()) {
             case UP -> map.getPlayer().move(0, -1);
             case DOWN -> map.getPlayer().move(0, 1);
@@ -352,23 +363,23 @@ public class Main extends Application {
 
 
 
-//    public void nextLevel(){
-//        Player player = maps.get(level).getPlayer();
-//        this.level++;
-//        if (level >= maps.size()){
-//            GameMap newMap = mapFromFileLoader.loadMap(this, nameMaps.get(level));
-//            addMap(newMap);
-//        }
-//        this.map = maps.get(level);
-//        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName(), player.CanWalkThroughWalls());
-//    }
+    public void nextLevel(){
+        Player player = maps.get(level).getPlayer();
+        this.level++;
+        if (level >= maps.size()){
+            GameMap newMap = mapFromFileLoader.loadMap(this, level);
+            addMap(newMap);
+        }
+        this.map = maps.get(level);
+        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName(), player.CanWalkThroughWalls());
+    }
 
-//    public void previousLevel(){
-//        Player player = maps.get(level).getPlayer();
-//        this.level--;
-//        this.map = maps.get(level);
-//        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName(), player.CanWalkThroughWalls());
-//    }
+    public void previousLevel(){
+        Player player = maps.get(level).getPlayer();
+        this.level--;
+        this.map = maps.get(level);
+        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName(), player.CanWalkThroughWalls());
+    }
 
     private void setupDbManager() {
         dbManager = new GameDatabaseManager();

@@ -21,7 +21,7 @@ public class Player extends Actor {
     }
 
 
-    public void move(int dx, int dy) {
+    public void move(int dx, int dy) throws CloneNotSupportedException {
         Cell nextCell = cell.getNeighbor(dx, dy);
         if (nextCell == null) {
             return;
