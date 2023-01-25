@@ -16,7 +16,7 @@ public class GameMap {
     private Player player;
     Main main;
 
-    public GameMap(Main mapLoader,int width, int height, CellType defaultCellType) throws CloneNotSupportedException {
+    public GameMap(Main mapLoader,int width, int height, CellType defaultCellType) {
 //        maps.add((GameMap) this.clone());
         this.main = mapLoader;
         this.width = width;
@@ -104,6 +104,10 @@ public class GameMap {
 //        Player newPlayer = maps.get(level).getPlayer();
 //        player.setCell(newPlayer.getCell());
 //    }
+
+    public Main getMain() {
+        return main;
+    }
 
     public boolean areCoordsOnMap(int i, int j) {
         return i >= 0 && i < width && j >= 0 && j < height;

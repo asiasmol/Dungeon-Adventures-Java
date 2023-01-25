@@ -19,7 +19,7 @@ public class MapLoader {
 
     List<String> maps = Arrays.asList("/map.txt","/map2.txt","/map3.txt","/win.txt");
 
-    public GameMap loadMap(Main main,int level) throws CloneNotSupportedException {
+    public GameMap loadMap(Main main,int level) {
         InputStream is = MapLoader.class.getResourceAsStream(maps.get(level));
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();

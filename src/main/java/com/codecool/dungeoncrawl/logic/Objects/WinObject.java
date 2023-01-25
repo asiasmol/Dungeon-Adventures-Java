@@ -12,7 +12,7 @@ public class WinObject  implements Entrance{
     }
     public static void checkWin( Cell cell) {
         if (Objects.equals(cell.getType(), CellType.WIN)) {
-//            cell.getGameMap().getMain().win();
+            cell.getGameMap().getMain().win();
         }
     }
 }
