@@ -6,16 +6,7 @@ DROP TABLE IF EXISTS cell;
 
 CREATE TABLE game (
                      id serial PRIMARY KEY,
-                     player_id integer NOT NULL,,
-);
-
-CREATE TABLE player (
-                        id SERIAL PRIMARY KEY,
-                        cell_id INTEGER REFERENCES cell(id),
-                        name VARCHAR(20),
-                        health integer,
-                        damage integer,
-                        items VARCHAR(20)
+                     player_id integer NOT NULL
 );
 
 CREATE TABLE map (
@@ -26,17 +17,27 @@ CREATE TABLE map (
                      height integer
 );
 
-CREATE TABLE mob (
-                     id serial PRIMARY KEY,
-                     cell_id INTEGER REFERENCES cell(id),
-                     health integer
-);
 CREATE TABLE cell (
                       id SERIAL PRIMARY KEY,
                       map_id INTEGER REFERENCES map(id),
                       x integer,
                       y integer,
                       type VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE mob (
+                     id serial PRIMARY KEY,
+                     cell_id INTEGER REFERENCES cell(id),
+                     health integer
+);
+
+CREATE TABLE player (
+                        id SERIAL PRIMARY KEY,
+                        cell_id INTEGER REFERENCES cell(id),
+                        name VARCHAR(20),
+                        health integer,
+                        damage integer,
+                        items VARCHAR(20)
 );
 
 ALTER TABLE ONLY game

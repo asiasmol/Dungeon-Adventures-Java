@@ -60,6 +60,7 @@ public class Cell implements Drawable {
     }
 
     public boolean hasNeighbor(int dx, int dy){
+        // return gameMap.areCoordsOnMap(x + dx, y + dy)
         return x + dx >= 0
                 && x + dx < gameMap.getWidth()
                 && y + dy >= 0

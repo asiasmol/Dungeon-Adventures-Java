@@ -83,7 +83,6 @@ public class GameMap {
         return player.getX() == x && player.getY() == y;
     }
 
-
     public boolean areCoordsOnMap(int i, int j) {
         return i >= 0 && i < width && j >= 0 && j < height;
     }
