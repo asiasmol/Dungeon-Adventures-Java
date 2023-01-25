@@ -31,14 +31,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Main extends Application {
-    MapLoader mapFromFileLoader = new MapLoader();
+    public MapLoader mapFromFileLoader = new MapLoader();
     GameDatabaseManager dbManager;
 
-    List<GameMap> maps = new ArrayList<>();
-    List<String> nameMaps = Arrays.asList("/map.txt","/map2.txt","/map3.txt","/win.txt");
-
     int level;
-    GameMap map;
+    GameMap map = mapFromFileLoader.loadMap(0);
 
     int FONT_SIZE = 16;
     String FONT_COLOR = "white";
@@ -63,11 +60,6 @@ public class Main extends Application {
     private GridPane mainLootGrid = new GridPane();
     Stage stage;
 
-
-    public Main() {
-        maps.add(mapFromFileLoader.loadMap(this,nameMaps.get(level)));
-        this.map =maps.get(level);
-    }
     public static void main(String[] args) {
         launch(args);
     }
@@ -175,10 +167,7 @@ public class Main extends Application {
         restartGameButton.setId("allbtn");
         restartGameButton.addEventFilter(MouseEvent.MOUSE_CLICKED, (e) -> {
             try {
-                maps = new ArrayList<>();
-                level = 0;
-                maps.add(mapFromFileLoader.loadMap(this,nameMaps.get(level)));
-                map = maps.get(level);
+                map = mapFromFileLoader.loadMap(0);
                 mainMenu(primaryStage);
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
@@ -361,27 +350,25 @@ public class Main extends Application {
         pickUpButton.setVisible(false);
     }
 
-    public void addMap(GameMap map) {
-        maps.add(map);
-    }
 
-    public void nextLevel(){
-        Player player = maps.get(level).getPlayer();
-        this.level++;
-        if (level >= maps.size()){
-            GameMap newMap = mapFromFileLoader.loadMap(this, nameMaps.get(level));
-            addMap(newMap);
-        }
-        this.map = maps.get(level);
-        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName(), player.CanWalkThroughWalls());
-    }
 
-    public void previousLevel(){
-        Player player = maps.get(level).getPlayer();
-        this.level--;
-        this.map = maps.get(level);
-        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName(), player.CanWalkThroughWalls());
-    }
+//    public void nextLevel(){
+//        Player player = maps.get(level).getPlayer();
+//        this.level++;
+//        if (level >= maps.size()){
+//            GameMap newMap = mapFromFileLoader.loadMap(this, nameMaps.get(level));
+//            addMap(newMap);
+//        }
+//        this.map = maps.get(level);
+//        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName(), player.CanWalkThroughWalls());
+//    }
+
+//    public void previousLevel(){
+//        Player player = maps.get(level).getPlayer();
+//        this.level--;
+//        this.map = maps.get(level);
+//        map.getPlayer().setAttributes(player.getInventory(), player.getHealth(), player.getDamage(), player.getName(), player.CanWalkThroughWalls());
+//    }
 
     private void setupDbManager() {
         dbManager = new GameDatabaseManager();

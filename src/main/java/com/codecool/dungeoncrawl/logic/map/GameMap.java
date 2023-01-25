@@ -9,14 +9,16 @@ import java.util.*;
 public class GameMap {
     private int width;
     private int height;
-
-    private Main main;
+    private List<GameMap> maps = new ArrayList<>();
+    private int level = 0;
     private Cell[][] cells;
     private final List<CellType> obstacles = Arrays.asList(CellType.WALL, CellType.CLOSE);
     private Player player;
+    MapLoader mapLoader;
 
-    public GameMap(Main main, int width, int height, CellType defaultCellType) {
-        this.main = main;
+    public GameMap(MapLoader mapLoader,int width, int height, CellType defaultCellType) {
+        maps.add(this);
+        this.mapLoader = mapLoader;
         this.width = width;
         this.height = height;
         cells = new Cell[width][height];
@@ -71,18 +73,37 @@ public class GameMap {
         }
     }
 
-     public List<CellType> getO(){
-        return obstacles;
-    }
-
-    public Main getMain() {
-        return main;
-    }
-
     public boolean isPlayerOnCoords(int x, int y){
         return player.getX() == x && player.getY() == y;
     }
 
+    public void next() {
+        level++;
+        if (level >= maps.size()){
+            maps.add(mapLoader.loadMap(level));
+        }
+        width = maps.get(level).getWidth();
+        height = maps.get(level).getHeight();
+        cells = maps.get(level).getCells();
+
+
+        Player newPlayer = maps.get(level).getPlayer();
+        player.setCell(newPlayer.getCell());
+    }
+
+    private Cell[][] getCells() {
+        return cells;
+    }
+
+    public void previous(){
+        level--;
+        width = maps.get(level).getWidth();
+        height = maps.get(level).getHeight();
+        cells = maps.get(level).getCells();
+
+        Player newPlayer = maps.get(level).getPlayer();
+        player.setCell(newPlayer.getCell());
+    }
 
     public boolean areCoordsOnMap(int i, int j) {
         return i >= 0 && i < width && j >= 0 && j < height;

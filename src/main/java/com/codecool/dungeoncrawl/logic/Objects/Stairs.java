@@ -18,10 +18,10 @@ public class Stairs implements Entrance{
 
     public void goDown(Cell cell) {
         if (Objects.equals(cell.getType(), CellType.STAIRSDOWN )){
-            cell.getGameMap().getMain().nextLevel();
+            cell.getGameMap().next();
         }
         if (Objects.equals(cell.getType(), CellType.STAIRSUP )){
-            cell.getGameMap().getMain().previousLevel();
+            cell.getGameMap().previous();
         }
     }
 }
