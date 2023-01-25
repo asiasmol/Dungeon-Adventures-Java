@@ -1,5 +1,7 @@
 package com.codecool.dungeoncrawl.model;
 
+import com.codecool.dungeoncrawl.logic.map.Cell;
+
 public class CellModel {
 
     private int id;
@@ -13,6 +15,13 @@ public class CellModel {
         this.x = x;
         this.y = y;
         this.type = type;
+    }
+
+    public CellModel(int mapId, Cell cell) {
+        this.mapId = mapId;
+        this.x = cell.getX();
+        this.y = cell.getY();
+        this.type = cell.getChar();
     }
 
     public int getId() {
