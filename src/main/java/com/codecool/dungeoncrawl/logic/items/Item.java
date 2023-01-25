@@ -7,6 +7,14 @@ public abstract class Item implements Drawable {
 
     private Cell cell;
 
+    private int health = 0;
+    private int damage = 0;
+
+    public Item(Cell cell) {
+        this.cell = cell;
+        this.cell.setItem(this);
+    }
+
     public int getHealth() {
         return health;
     }
@@ -21,14 +29,6 @@ public abstract class Item implements Drawable {
 
     public void setDamage(int damage) {
         this.damage = damage;
-    }
-
-    private int health = 0;
-    private int damage = 0;
-
-    public Item(Cell cell) {
-        this.cell = cell;
-        this.cell.setItem(this);
     }
 
     public Cell getCell() {
