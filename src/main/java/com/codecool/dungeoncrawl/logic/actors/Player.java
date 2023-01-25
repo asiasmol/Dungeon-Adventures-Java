@@ -22,17 +22,17 @@ public class Player extends Actor {
 
 
     public void move(int dx, int dy) {
-        if (cell.hasNeighbor(dx, dy)) {
-            Cell nextCell = cell.getNeighbor(dx, dy);
-            nextCell.tryToEnter(this);
-            WinObject.checkWin(dx, dy, cell);
-
-            if (nextCell.canPlayerMoveOn(canWalkThroughWalls)) {
-                changeCell(dx, dy);
-            } else if (nextCell.containsEnemyThatCanBeAttacked()) {
-                fight(nextCell.getActor());
-            }
+        Cell nextCell = cell.getNeighbor(dx, dy);
+        if (nextCell == null) {
+            return;
         }
+        if (nextCell.containsEnemyThatCanBeAttacked()) {
+            fight(nextCell.getActor());
+        }
+        if (nextCell.canPlayerMoveOn(canWalkThroughWalls)) {
+            changeCell(dx, dy);
+        }
+        nextCell.tryToEnter(this);
         cell.getGameMap().getMobs().forEach(Actor::move);
     }
 
@@ -48,6 +48,7 @@ public class Player extends Actor {
     public void move() {}
 
     public void pickUpItem(){
+        if (cell.getItem()==null) return;
         items.add(cell.getItem());
         damage += cell.getItem().getDamage();
         health += cell.getItem().getHealth();
