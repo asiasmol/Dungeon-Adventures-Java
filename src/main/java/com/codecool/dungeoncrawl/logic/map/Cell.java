@@ -84,7 +84,7 @@ public class Cell implements Drawable {
         return gameMap;
     }
 
-    public void tryToEnter(Player player) throws CloneNotSupportedException {
+    public void tryToEnter(Player player)  {
         entrance.tryToEnter(this, player.getInventory());
     }
 
