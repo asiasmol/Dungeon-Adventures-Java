@@ -41,22 +41,22 @@ public class CellDaoJdbc implements CellDao{
             st.setInt(5, cell.getId());
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error by updating the author", e);
+            throw new RuntimeException("Error by updating the cell (x, y) = (" + cell.getX() + ", " + cell.getY() + ")" , e);
         }
     }
 
     @Override
     public CellModel get(int id) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT map_id, x, y FROM cell WHERE id = ?";
+            String sql = "SELECT map_id, x, y, type FROM cell WHERE id = ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) return null;
-            CellModel cell = new CellModel(rs.getInt(1),
-                    rs.getInt(2),
+            CellModel cell = new CellModel(rs.getInt(2),
                     rs.getInt(3),
-                    rs.getString(4));
+                    rs.getInt(4),
+                    rs.getString(5));
             cell.setId(id);
             return cell;
         } catch (SQLException e) {
@@ -73,7 +73,8 @@ public class CellDaoJdbc implements CellDao{
             ResultSet rs = st.executeQuery();
             List<CellModel> cells = new ArrayList<>();
             while (rs.next()){
-                CellModel cell = new CellModel(mapId, rs.getInt(3),
+                CellModel cell = new CellModel(mapId,
+                        rs.getInt(3),
                         rs.getInt(4),
                         rs.getString(5));
                 cell.setId(rs.getInt(1));
@@ -81,7 +82,7 @@ public class CellDaoJdbc implements CellDao{
             }
             return cells;
         } catch (SQLException e) {
-            throw new RuntimeException("Error while reading all authors", e);
+            throw new RuntimeException("Error while reading all map cells. ", e);
         }
     }
 }
