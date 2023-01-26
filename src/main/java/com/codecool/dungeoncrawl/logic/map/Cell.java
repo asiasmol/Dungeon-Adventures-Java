@@ -25,6 +25,12 @@ public class Cell implements Drawable {
         this.entrance = new NoEntry();
     }
 
+    public Cell(int x, int y,CellType type) {
+        this.type = type;
+        this.x = x;
+        this.y = y;
+    }
+
     public void setEntrance(Entrance entrance) {
         this.entrance = entrance;
     }

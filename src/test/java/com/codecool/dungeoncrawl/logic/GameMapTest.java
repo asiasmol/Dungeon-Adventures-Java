@@ -13,9 +13,8 @@ public class GameMapTest {
     @Test
     void testGetCell(){
         //given
-        Main main = new Main();
-        GameMap gameMap = new GameMap(main, 1,1,CellType.FLOOR);
-        Cell cell = new Cell(gameMap, 1, 1, CellType.FLOOR);
+        GameMap gameMap = new GameMap(1,1,CellType.FLOOR);
+        Cell cell = new Cell(1, 1, CellType.FLOOR);
         gameMap.setCell(cell);
         //when
         Cell result = gameMap.getCell(1,1);
