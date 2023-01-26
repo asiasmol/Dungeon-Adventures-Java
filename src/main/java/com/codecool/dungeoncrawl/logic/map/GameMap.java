@@ -33,6 +33,10 @@ public class GameMap {
         return cells[x][y];
     }
 
+    public void setCell(Cell cell) {
+        cells[cell.getX()][cell.getY()] = cell;
+    }
+
     public void setPlayer(Player player) {
         this.player = player;
     }

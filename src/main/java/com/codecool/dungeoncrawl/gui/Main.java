@@ -66,6 +66,9 @@ public class Main extends Application {
         maps.add(mapFromFileLoader.loadMap(this,level));
         this.map =maps.get(level);
     }
+    public Main(String a){
+
+    }
     public static void main(String[] args) {
         launch(args);
     }

@@ -17,7 +17,7 @@ public class Cell implements Drawable {
     private GameMap gameMap;
     private final int x, y;
 
-    Cell(GameMap gameMap, int x, int y, CellType type) {
+    public Cell(GameMap gameMap, int x, int y, CellType type) {
         this.gameMap = gameMap;
         this.x = x;
         this.y = y;
