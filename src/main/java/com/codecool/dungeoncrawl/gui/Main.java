@@ -2,10 +2,7 @@ package com.codecool.dungeoncrawl.gui;
 
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.logic.map.Cell;
-import com.codecool.dungeoncrawl.logic.map.GameMap;
-import com.codecool.dungeoncrawl.logic.map.MapLoader;
-import com.codecool.dungeoncrawl.logic.map.OutOfMapCell;
+import com.codecool.dungeoncrawl.logic.map.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -27,11 +24,10 @@ import javafx.stage.Stage;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Main extends Application {
-    MapLoader mapFromFileLoader = new MapLoader();
+    MapLoader mapLoader = new FileMapLoader();
     GameDatabaseManager dbManager;
 
     List<GameMap> maps = new ArrayList<>();
@@ -63,8 +59,8 @@ public class Main extends Application {
 
 
     public Main() {
-        maps.add(mapFromFileLoader.loadMap(this,level));
-        this.map =maps.get(level);
+        maps.add(mapLoader.loadMap(this, level));
+        this.map = maps.get(level);
     }
     public Main(String a){
 
@@ -178,7 +174,7 @@ public class Main extends Application {
             try {
                 maps = new ArrayList<>();
                 level = 0;
-                maps.add(mapFromFileLoader.loadMap(this,level));
+                maps.add(mapLoader.loadMap(this,level));
                 map = maps.get(level);
                 mainMenu(primaryStage);
             } catch (FileNotFoundException fileNotFoundException) {
@@ -370,7 +366,7 @@ public class Main extends Application {
         Player player = maps.get(level).getPlayer();
         this.level++;
         if (level >= maps.size()){
-            GameMap newMap = mapFromFileLoader.loadMap(this, level);
+            GameMap newMap = mapLoader.loadMap(this, level);
             addMap(newMap);
         }
         this.map = maps.get(level);
