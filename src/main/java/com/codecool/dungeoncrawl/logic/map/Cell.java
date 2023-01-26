@@ -24,7 +24,7 @@ public class Cell implements Drawable {
         this.type = type;
         this.entrance = new NoEntry();
     }
-
+    //na potrzeby testu ↓
     public Cell(int x, int y,CellType type) {
         this.type = type;
         this.x = x;

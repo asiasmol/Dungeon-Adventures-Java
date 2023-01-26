@@ -13,7 +13,7 @@ public class GameMapTest {
     @Test
     void testGetCell(){
         //given
-        GameMap gameMap = new GameMap(1,1,CellType.FLOOR);
+        GameMap gameMap = new GameMap(2,2,CellType.FLOOR);
         Cell cell = new Cell(1, 1, CellType.FLOOR);
         gameMap.setCell(cell);
         //when
