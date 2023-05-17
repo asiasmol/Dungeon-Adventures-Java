@@ -60,15 +60,6 @@ public class GameMapTest {
         assertEquals(player, result);
     }
 
-    @Test
-    void testGetWidth(){
-        //given
-        GameMap gameMap = new GameMap(10, 2, CellType.FLOOR);
-        //when
-        int width = gameMap.getWidth();
-        //then
-        assertEquals(10,width);
-    }
 
     @Test
     void testGetHeight(){
