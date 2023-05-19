@@ -1,4 +1,4 @@
-### ✨ Dungeon Adventures ♟️
+# ✨ Dungeon Adventures ♟️
 
 Roguelikes are one of the oldest types of video games. The earliest ones were made in the 70s, and they were inspired a lot by tabletop RPGs.
 
